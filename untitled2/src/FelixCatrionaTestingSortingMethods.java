@@ -8,7 +8,7 @@ import java.time.LocalTime;
 public class FelixCatrionaTestingSortingMethods {
     public static void main(String[] args) {
         printHeader();
-        int sz = 500;
+        int sz = 50000;
         Integer[] list = new Integer[sz];
         for(int i=0; i<list.length;i++){
             Integer num = (int)(Math.random() * sz + 1);
@@ -16,6 +16,8 @@ public class FelixCatrionaTestingSortingMethods {
         }
         Integer[] backup = new Integer[sz];
         System.arraycopy(list, 0,backup, 0, sz);
+        Integer[] backup2 = new Integer[sz];
+        System.arraycopy(list, 0,backup2, 0, sz);
         ArrayList<Integer> arr = new ArrayList<>(Arrays.asList(list));
         System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers:");
         long startCollection = System.nanoTime();
@@ -26,12 +28,12 @@ public class FelixCatrionaTestingSortingMethods {
         System.out.printf("My Selection-Sort Time: %.2f milliseconds%n", (double)selectionSort(list)/1000);
         list= backup;
         System.out.printf("My Bubble-Sort Time: %.2f milliseconds%n", (double)bubbleSort(list)/1000);
-        list= backup;
+        list= backup2;
         System.out.printf("My Insertion-Sort Time: %.2f milliseconds%n", (double)insertionSort(list)/1000);
         list= backup;
         System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000);
         list= backup;
-        System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000);
+        //System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000);
         list= backup;
         System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000);
         printFooter();
@@ -43,6 +45,7 @@ public class FelixCatrionaTestingSortingMethods {
      * @param a Generic-type array of any size
      * @return Time elapsed in nanoseconds
      */
+
     public static <T extends Comparable<? super T>> long selectionSort(T[] a) {
         long start = System.nanoTime();
         for (int i = 0; i < a.length - 1; i++) {
