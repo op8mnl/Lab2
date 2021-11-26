@@ -8,7 +8,7 @@ import java.time.LocalTime;
 public class FelixCatrionaTestingSortingMethods {
     public static void main(String[] args) {
         printHeader();
-        int sz = 500;
+        int sz = 50000;
         Integer[] list = new Integer[sz];
         for(int i=0; i<list.length;i++){
             Integer num = (int)(Math.random() * sz + 1);
