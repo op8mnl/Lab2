@@ -8,7 +8,7 @@ import java.time.LocalTime;
 public class FelixCatrionaTestingSortingMethods {
     public static void main(String[] args) {
         printHeader();
-        int sz = 50000;
+        int sz = 500;
         Integer[] list = new Integer[sz];
         for(int i=0; i<list.length;i++){
             Integer num = (int)(Math.random() * sz + 1);
@@ -23,19 +23,19 @@ public class FelixCatrionaTestingSortingMethods {
         long startCollection = System.nanoTime();
         Collections.sort(arr);
         long finishCollection = System.nanoTime();
-        System.out.println("Collections' Sorting Time: " + (((double)(finishCollection)-startCollection)/1000) + " milliseconds");
+        System.out.println("Collections' Sorting Time: " + (((double)(finishCollection)-startCollection)/1000000) + " milliseconds");
         list = backup;
-        System.out.printf("My Selection-Sort Time: %.2f milliseconds%n", (double)selectionSort(list)/1000);
+        System.out.printf("My Selection-Sort Time: %.2f milliseconds%n", (double)selectionSort(list)/1000000);
         list= backup;
-        System.out.printf("My Bubble-Sort Time: %.2f milliseconds%n", (double)bubbleSort(list)/1000);
+        System.out.printf("My Bubble-Sort Time: %.2f milliseconds%n", (double)bubbleSort(list)/1000000);
         list= backup2;
-        System.out.printf("My Insertion-Sort Time: %.2f milliseconds%n", (double)insertionSort(list)/1000);
+        System.out.printf("My Insertion-Sort Time: %.2f milliseconds%n", (double)insertionSort(list)/1000000);
         list= backup;
-        System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000);
+        System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000000);
         list= backup;
-        //System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000);
+        System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000000);
         list= backup;
-        System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000);
+        System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000000);
         printFooter();
     }
 
@@ -87,7 +87,6 @@ public class FelixCatrionaTestingSortingMethods {
      * Insertion Sort Method (Generic)
      *
      * @param a   Generic-type array of any size
-     * @param <T>
      * @return Time elapsed in nanoseconds
      */
     public static <T extends Comparable<? super T>> long insertionSort(T[] a) {
