@@ -23,7 +23,7 @@ public class FelixCatriona_SortNameAndGrade {
             System.out.println(sg.elementAt(i).toString());
         }
         Collections.sort(sg);
-        System.out.println("Sorted by Grades ................");
+        System.out.println("\nSorted by Grades ................");
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(sg.elementAt(i).toString());
         }
@@ -31,12 +31,12 @@ public class FelixCatriona_SortNameAndGrade {
         sg.copyInto(arr);
         insertionSort(arr, 1);
 
-        System.out.println("Sorted by FirstName ................");
+        System.out.println("\nSorted by FirstName ................");
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(arr[i].toString());
         }
         insertionSort(arr,2);
-        System.out.println("Sorted by LastName ................");
+        System.out.println("\nSorted by LastName ................");
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(arr[i].toString());
         }

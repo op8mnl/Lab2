@@ -1,5 +1,3 @@
-import java.sql.Array;
-import java.sql.SQLOutput;
 import java.util.*;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalTime;
@@ -33,8 +31,8 @@ public class FelixCatrionaTestingSortingMethods {
         list= backup;
         System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000000);
         list= backup;
-        System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000000);
-        list= backup;
+        //System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000000);
+        //list= backup;
         System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000000);
         printFooter();
     }
