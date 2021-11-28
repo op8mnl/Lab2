@@ -15,8 +15,7 @@ public class FelixCatriona_SortNameAndGrade {
                 Math.random()*26)};
         Vector<StudentGrade> sg = new Vector(fnArray.length);
         for(int i=0; i<fnArray.length; i++){
-            StudentGrade student = new StudentGrade(fnArray[i], lnArray[i], grd[i]);
-            sg.add(student);
+            sg.add(new StudentGrade(fnArray[i], lnArray[i], grd[i]));
         }
         System.out.println("The Unsorted Array ................");
         for (int i = 0; i < fnArray.length; i++) {
