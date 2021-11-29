@@ -6,23 +6,23 @@ import java.util.Vector;
 public class FelixCatriona_SortNameAndGrade {
     public static void main(String[] args) {
         printHeader();
-        String[] fnArray = {"Hermione", "Ron", "Harry", "Luna", "Ginny", "Draco", "Dean", "Fred"};
+        String[] fnArray = {"Hermione", "Ron", "Harry", "Luna", "Ginny", "Draco", "Dean", "Fred"}; // Creating three arrays with test values 
         String[] lnArray = {"Granger", "Weasley", "Potter", "Lovegood", "Weasley", "Malfoy", "Thomas", "Weasley"};
-        Integer[] grd = {(int)(60 + Math.random()*26),(int)(60 +
+        Integer[] grd = {(int)(60 + Math.random()*26),(int)(60 +          // Randomly populating the third array with test values
                 Math.random()*26),(int)(60 + Math.random()*26),(int)(60 +
                 Math.random()*26),(int)(60 + Math.random()*26),(int)(60 +
                 Math.random()*26),(int)(60 + Math.random()*26),(int)(60 +
                 Math.random()*26)};
-        Vector<StudentGrade> sg = new Vector(fnArray.length);
+        Vector<StudentGrade> sg = new Vector(fnArray.length); // creating vector objects to contain the information of a student (first name, last name, grade)
         for(int i=0; i<fnArray.length; i++){
             sg.add(new StudentGrade(fnArray[i], lnArray[i], grd[i]));
         }
-        System.out.println("The Unsorted Array ................");
+        System.out.println("The Unsorted Array ................"); // displaying the usorted vectors
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(sg.elementAt(i).toString());
         }
         Collections.sort(sg);
-        System.out.println("\nSorted by Grades ................");
+        System.out.println("\nSorted by Grades ................"); // sorting by grades using the collections sort
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(sg.elementAt(i).toString());
         }
@@ -30,20 +30,20 @@ public class FelixCatriona_SortNameAndGrade {
         sg.copyInto(arr);
         insertionSort(arr, 1);
 
-        System.out.println("\nSorted by FirstName ................");
+        System.out.println("\nSorted by FirstName ................"); // sorting by first name using a stable insertion sort
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(arr[i].toString());
         }
         insertionSort(arr,2);
-        System.out.println("\nSorted by LastName ................");
+        System.out.println("\nSorted by LastName ................");// sorting by last name using a stable insertion sort
         for (int i = 0; i < fnArray.length; i++) {
             System.out.println(arr[i].toString());
         }
         printFooter();
 
     }
-    public static void insertionSort(StudentGrade[] a, int key) {
-        if (key == 1) {
+    public static void insertionSort(StudentGrade[] a, int key) { // stable insertion sort, iterative implementation that checks for a key that determines to sort by first or last name
+        if (key == 1) { // check for first key, sort by first name
             for (int i = 1; i < a.length; i++) {
                 String fName = a[i].getFirstName();
                 for (int j = i - 1; j >= 0 && a[j].getFirstName().compareTo(fName) > 0; j--) {
@@ -52,7 +52,7 @@ public class FelixCatriona_SortNameAndGrade {
                     a[j] = temp;
                 }
             }
-        }else if (key == 2){
+        }else if (key == 2){ // check for second key, sort by last name
                 for (int i = 1; i < a.length; i++) {
                     String lName = a[i].getLastName();
                     for (int j = i - 1; j >= 0 && a[j].getLastName().compareTo(lName) > 0; j--) {
@@ -61,11 +61,12 @@ public class FelixCatriona_SortNameAndGrade {
                         a[j] = temp;
                     }
                 }
-        }else{
+        }else{ // input validation
             System.out.println("Invalid Key.");
         }
 
     }
+    //when called will print the header message
     public static void printHeader (){
         System.out.println("\n*******************************************************\n" +
                 "Names: Felix Zheng and Catriona Chan.\n"+
