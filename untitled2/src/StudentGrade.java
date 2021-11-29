@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class StudentGrade implements Comparable<StudentGrade> {
     private String firstName;
     private String lastName;

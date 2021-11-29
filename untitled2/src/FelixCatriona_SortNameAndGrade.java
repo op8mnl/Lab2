@@ -1,7 +1,7 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.Vector;
+import java.util.*;
 
 public class FelixCatriona_SortNameAndGrade {
     public static void main(String[] args) {

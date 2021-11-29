@@ -8,13 +8,13 @@ public class FelixCatrionaTestingSortingMethods {
         printHeader();
         int sz = 50000;
         Integer[] list = new Integer[sz];
-        for(int i=0; i<list.length;i++){
+        for(int i=0; i<list.length;i++){ //fill Integer array with random numbers from 1 to the size the array
             Integer num = (int)(Math.random() * sz + 1);
             list[i]= num;
         }
-        Integer[] backup = new Integer[sz];
+        Integer[] backup = new Integer[sz]; //creates a backup array
         System.arraycopy(list, 0,backup, 0, sz);
-        Integer[] backup2 = new Integer[sz];
+        Integer[] backup2 = new Integer[sz];//creates another backup array
         System.arraycopy(list, 0,backup2, 0, sz);
         ArrayList<Integer> arr = new ArrayList<>(Arrays.asList(list));
         System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers:");
@@ -28,12 +28,12 @@ public class FelixCatrionaTestingSortingMethods {
         System.out.printf("My Bubble-Sort Time: %.2f milliseconds%n", (double)bubbleSort(list)/1000000);
         list= backup2;
         System.out.printf("My Insertion-Sort Time: %.2f milliseconds%n", (double)insertionSort(list)/1000000);
-        list= backup;
+        list= backup2;
         System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000000);
-        list= backup;
+        list= backup2;
         System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000000);
-        list= backup;
-        System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000000);
+        //list= backup2;
+        //System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000000);
         printFooter();
     }
 
@@ -46,10 +46,10 @@ public class FelixCatrionaTestingSortingMethods {
 
     public static <T extends Comparable<? super T>> long selectionSort(T[] a) {
         long start = System.nanoTime();
-        for (int i = 0; i < a.length - 1; i++) {
+        for (int i = 0; i < a.length - 1; i++) { //sets the first element as the minimum values
             T min = a[i];
             for (int j = i + 1; j < a.length; j++) {
-                if (min.compareTo(a[j]) > 0) {
+                if (min.compareTo(a[j]) > 0) {//compares with all the elements from left to right if there is a smaller value, switches places
                     a[i] = a[j];
                     a[j] = min;
                     min = a[i];
@@ -68,9 +68,9 @@ public class FelixCatrionaTestingSortingMethods {
      */
     public static <T extends Comparable<? super T>> long bubbleSort(T[] a) {
         long start = System.nanoTime();
-        for (int i = 1; i < a.length; i++) {
+        for (int i = 1; i < a.length; i++) { //starts at the element 0 and compares with the element on its right
             for (int j = 0; j < a.length - i; j++) {
-                if (a[j].compareTo(a[j + 1]) > 0) {
+                if (a[j].compareTo(a[j + 1]) > 0) {//swap places if the element to the right is less than the element on the left
                     T temp = a[j];
                     a[j] = a[j + 1];
                     a[j + 1] = temp;
@@ -89,9 +89,9 @@ public class FelixCatrionaTestingSortingMethods {
      */
     public static <T extends Comparable<? super T>> long insertionSort(T[] a) {
         long start = System.nanoTime();
-        for(int i=1; i<a.length;i++){
+        for(int i=1; i<a.length;i++){ //compare the first element in array to all the elements from left to right
             T key = a[i];
-            for(int j=i-1; j>=0 && a[j].compareTo(key)>0; j--){
+            for(int j=i-1; j>=0 && a[j].compareTo(key)>0; j--){ //if the element is greater than the first element, a swap occurs
                 a[j+1]=a[j];
                 a[j] = key;
             }
@@ -139,6 +139,7 @@ public class FelixCatrionaTestingSortingMethods {
      * @param b Index b
      * @return Time elapsed in nanoseconds
      */
+    /*
     public static <T extends Comparable<? super T>>long quickSort(T[] s, int a, int b) {
         long start = System.nanoTime();
         if (a >= b) {
@@ -171,7 +172,48 @@ public class FelixCatrionaTestingSortingMethods {
         return l+1;
     }
 
-//FIX THIS COMMENT
+*/
+    public static <T extends Comparable<? super T>> long quickSort(T[] s, int a, int b) {
+        long start = System.nanoTime();
+
+        if (a >= b) {//subArray is already sorted, since there's one element or less
+            return 0;//how long it took
+        }
+
+        int l = a;
+        int r = b;//section that'll be pivoted around index q
+        T pivot = s[(a + b) / 2];//pivot from middle
+        T temp;//used for swapping
+
+        while (l <= r) {//continues until the value is less or equal to the q-value
+            while (s[l].compareTo(pivot) < 0) {//scan until reaching a value smaller/equal to pivot
+                l++;
+            }
+            while (s[r].compareTo(pivot) > 0) {//checking from the other end
+                r--;
+            }
+            if (l <= r) {//if the indices did not strictly cross, swap the two values & shrink the range
+                if (l != r) {
+                    temp = s[l];
+                    s[l] = s[r];
+                    s[r] = temp;//swap
+                }
+                l++;
+                r--;//range shrink
+            }
+        }
+        //sort the segments recursively, until the whole array is sorted:
+        if (a < r) {
+            quickSort(s,a , r);
+        }
+        if (l < b) {
+            quickSort(s, l, b);
+        }
+        //sorted
+        long finish = System.nanoTime();
+        return (finish- start);//how long it took
+    }
+
     /**
      * Bucket Sort Method (Optional & Not Generic)
      * @param a Integer array
