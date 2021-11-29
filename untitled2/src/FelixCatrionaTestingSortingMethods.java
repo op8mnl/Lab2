@@ -19,21 +19,21 @@ public class FelixCatrionaTestingSortingMethods {
         ArrayList<Integer> arr = new ArrayList<>(Arrays.asList(list));
         System.out.println("Testing execution time of different sorting algorithms for sorting 50000 random numbers:");
         long startCollection = System.nanoTime();
-        Collections.sort(arr);
+        Collections.sort(arr); //collection sort the ArrayList
         long finishCollection = System.nanoTime();
-        System.out.printf("Collections' Sorting Time: %.2f milliseconds%n", (((double)(finishCollection)-startCollection)/1000000));
+        System.out.printf("Collections' Sorting Time: %.2f milliseconds%n", (((double)(finishCollection)-startCollection)/1000000)); //prints out time taken for Collections sort
         list = backup;
-        System.out.printf("My Selection-Sort Time: %.2f milliseconds%n", (double)selectionSort(list)/1000000);
+        System.out.printf("My Selection-Sort Time: %.2f milliseconds%n", (double)selectionSort(list)/1000000);//prints out time taken for selection sort
         list= backup;
-        System.out.printf("My Bubble-Sort Time: %.2f milliseconds%n", (double)bubbleSort(list)/1000000);
+        System.out.printf("My Bubble-Sort Time: %.2f milliseconds%n", (double)bubbleSort(list)/1000000);//prints out time taken for bubble sort
         list= backup2;
-        System.out.printf("My Insertion-Sort Time: %.2f milliseconds%n", (double)insertionSort(list)/1000000);
-        list= backup2;
-        System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000000);
-        list= backup2;
-        System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000000);
-        //list= backup2;
-        //System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,sz)/1000000);
+        System.out.printf("My Insertion-Sort Time: %.2f milliseconds%n", (double)insertionSort(list)/1000000);//prints out time taken for insertion sort
+        list= backup;
+        System.out.printf("My Merge-Sort Time: %.2f milliseconds%n", (double)mergeSort(list)/1000000);//prints out time taken for merge sort
+        list= backup;
+        System.out.printf("My Quick-Sort Time: %.2f milliseconds%n", (double)quickSort(list,0,sz-1)/1000000);//prints out time taken for quick sort
+        list= backup;
+        System.out.printf("My Bucket-Sort Time: %.2f milliseconds%n", (double)bucketSort(list,0,sz-1,5)/1000000);//prints out time taken for bucket sort
         printFooter();
     }
 
@@ -47,12 +47,13 @@ public class FelixCatrionaTestingSortingMethods {
     public static <T extends Comparable<? super T>> long selectionSort(T[] a) {
         long start = System.nanoTime();
         for (int i = 0; i < a.length - 1; i++) { //sets the first element as the minimum values
-            T min = a[i];
+            int minIndex =i;
             for (int j = i + 1; j < a.length; j++) {
-                if (min.compareTo(a[j]) > 0) {//compares with all the elements from left to right if there is a smaller value, switches places
-                    a[i] = a[j];
-                    a[j] = min;
-                    min = a[i];
+                if (a[minIndex].compareTo(a[j]) > 0) {//compares with all the elements from left to right if there is a smaller value, switches places
+                    minIndex =j;
+                    T temp = a[minIndex];
+                    a[minIndex] = a[j];
+                    a[j] = temp;
                 }
             }
         }
@@ -139,87 +140,45 @@ public class FelixCatrionaTestingSortingMethods {
      * @param b Index b
      * @return Time elapsed in nanoseconds
      */
-    /*
-    public static <T extends Comparable<? super T>>long quickSort(T[] s, int a, int b) {
-        long start = System.nanoTime();
-        if (a >= b) {
-            return 0;
+    //Generic Quick Sort
+    public static <T extends Comparable<? super T>> long quickSort(T[] s, int a, int b){
+        long startTime = System.nanoTime();
+        if(a >= b){
+            return System.nanoTime() - startTime;
         }
-        int index = partition(s, a, b);
-        quickSort(s, a, index-1);
-        quickSort(s, index+1, b);
-        long finish = System.nanoTime();
-        return finish-start;
+        int l = a; //left index
+        int r = b; //right index
+        T pivot = s[(a+b)/2]; //pivot at midway point
+        T temp;
+
+        while(l<=r){//while left is smaller or equal to right index
+            while(s[l].compareTo(pivot)<0){
+                l++;//when element at left is smaller than the pivot, increase the left index
+            }
+            while(s[r].compareTo(pivot)>0){
+                r--;//when element at right is greater than the pivot, decrease the right index
+            }
+            if(l<=r){
+                temp = s[l]; //switches the left and the right element
+                s[l] = s[r];
+                s[r] = temp;
+                l++;//increase left index by 1
+                r--;//decrease right index by 1
+            }
+        }
+        quickSort(s,a,l-1); //call quicksort for left side of array
+        quickSort(s,l+1,b);//call quicksort for right side of array
+        long endTime = System.nanoTime();
+        return endTime - startTime;
     }
-    public static <T extends Comparable<? super T>>int partition(T[] s, int a, int b) {
-        T pivot = s[b];
-        int l = (a-1);
 
-        for (int j = a; j < b; j++) {
-            if (s[j].compareTo(pivot) <= 0) {
-                l++;
-
-                T temp = s[l];
-                s[l] = s[j];
-                s[j] = temp;
-            }
-        }
-
-        T temp = s[l+1];
-        s[l+1] = s[b];
-        s[b] = temp;
-
-        return l+1;
-    }
-
-*/
-    public static <T extends Comparable<? super T>> long quickSort(T[] s, int a, int b) {
-        long start = System.nanoTime();
-
-        if (a >= b) {//subArray is already sorted, since there's one element or less
-            return 0;//how long it took
-        }
-
-        int l = a;
-        int r = b;//section that'll be pivoted around index q
-        T pivot = s[(a + b) / 2];//pivot from middle
-        T temp;//used for swapping
-
-        while (l <= r) {//continues until the value is less or equal to the q-value
-            while (s[l].compareTo(pivot) < 0) {//scan until reaching a value smaller/equal to pivot
-                l++;
-            }
-            while (s[r].compareTo(pivot) > 0) {//checking from the other end
-                r--;
-            }
-            if (l <= r) {//if the indices did not strictly cross, swap the two values & shrink the range
-                if (l != r) {
-                    temp = s[l];
-                    s[l] = s[r];
-                    s[r] = temp;//swap
-                }
-                l++;
-                r--;//range shrink
-            }
-        }
-        //sort the segments recursively, until the whole array is sorted:
-        if (a < r) {
-            quickSort(s,a , r);
-        }
-        if (l < b) {
-            quickSort(s, l, b);
-        }
-        //sorted
-        long finish = System.nanoTime();
-        return (finish- start);//how long it took
-    }
 
     /**
      * Bucket Sort Method (Optional & Not Generic)
      * @param a Integer array
      * @param first index of the first number
      * @param last index of the last number
-     * @param maxDigits the number of items in the array
+     * @param maxDigits the number of digits in the longest integer
      * @return Time elapsed in nanoseconds
      */
     public static long bucketSort(Integer[] a, int first, int last, int maxDigits) {
